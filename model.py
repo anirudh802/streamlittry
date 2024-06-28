@@ -158,9 +158,7 @@ def save_image_tensor(image_tensor, file_name):
     image.save(file_name)
 
 transforms_ = [
-    transforms.Resize(int(img_height * 1.12), Image.BICUBIC),
-    transforms.RandomCrop((img_height, img_width)),
-    transforms.RandomHorizontalFlip(),
+    transforms.Resize((img_height, img_width)),
     transforms.ToTensor(),
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
 ]
