@@ -201,6 +201,11 @@ st.title('CycleGAN Age Transformation')
 st.write('Upload an image to transform it to an aged version.')
 
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+option = st.selectbox(
+    "Choose ageing or de-ageing",
+    ("Ageing", "Deageing"))
+
+st.write("You selected:", option)
 if uploaded_file is not None:
     image = Image.open(uploaded_file).convert('RGB')
     st.image(image, caption='Uploaded Image', use_column_width=True)
@@ -210,8 +215,12 @@ if uploaded_file is not None:
     shuffle=True,
     num_workers=1,
 )
-
-    fake_image_tensor = sample_images(1)
-    save_image_tensor(fake_image_tensor, 'generated_image.jpg')
-    st.image('generated_image.jpg', caption='Aged Image', use_column_width=True)
+    if option=="Ageing":
+        fake_image_tensor = sample_images(1)
+        save_image_tensor(fake_image_tensor, 'generated_image.jpg')
+        st.image('generated_image.jpg', caption='Aged Image', use_column_width=True)
+    else:
+        fake_image_tensor = sample_images(0)
+        save_image_tensor(fake_image_tensor, 'generated_image.jpg')
+        st.image('generated_image.jpg', caption='De-Aged Image', use_column_width=True)
 
